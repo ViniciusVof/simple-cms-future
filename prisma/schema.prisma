@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  email    String @unique
+  name     String
+  password String
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("users")
+}
+
+model Pages {
+  id      String  @id @default(uuid())
+  slug    String  @unique
+  title   String
+  content String?
+
+  published Boolean @default(false)
+
+  created_at  DateTime?  @default(now())
+  updated_at  DateTime?  @default(now())
+  Carrossel   Carrossel? @relation(fields: [carrosselId], references: [id])
+  carrosselId String?
+}
+
+model Carrossel {
+  id     String   @id @default(uuid())
+  title  String
+  images Images[]
+  pages  Pages[]
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+}
+
+model Images {
+  id          String     @id @default(uuid())
+  title       String
+  content     String
+  url         String
+  fileName    String
+  Carrossel   Carrossel? @relation(fields: [carrosselId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  carrosselId String?
+}
