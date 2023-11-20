@@ -52,3 +52,5 @@ class PageController {
     return response.json(page);
   }
 }
+
+export default new PageController();
