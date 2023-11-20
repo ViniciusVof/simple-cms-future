@@ -8,20 +8,20 @@ const router = Router();
 
 const upload = multer(uploadConfig.upload("./uploads"));
 
-router.get("/", isAuthenticated, ImageController.FindAll);
-router.get("/:id", isAuthenticated, ImageController.FindById);
+router.get("/listAll", isAuthenticated, ImageController.FindAll);
+router.get("/find/:id", isAuthenticated, ImageController.FindById);
 router.post(
-  "/",
+  "/create",
   isAuthenticated,
   upload.single("file"),
   ImageController.Create
 );
 router.put(
-  "/:id",
+  "/update/:id",
   isAuthenticated,
   upload.single("file"),
   ImageController.Update
 );
-router.delete("/:id", isAuthenticated, ImageController.Delete);
+router.delete("/delete/:id", isAuthenticated, ImageController.Delete);
 
 export default router;

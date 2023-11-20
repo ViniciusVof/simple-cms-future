@@ -4,10 +4,10 @@ import { isAuthenticated } from "../middlewares/isAuthenticated";
 
 const router = Router();
 
-router.get("/", isAuthenticated, CarrosselController.FindAll);
-router.get("/:id", isAuthenticated, CarrosselController.FindById);
-router.post("/", isAuthenticated, CarrosselController.Create);
-router.put("/:id", isAuthenticated, CarrosselController.Update);
-router.delete("/:id", isAuthenticated, CarrosselController.Delete);
+router.get("/listAll", isAuthenticated, CarrosselController.FindAll);
+router.get("/find/:id", isAuthenticated, CarrosselController.FindById);
+router.post("/create", isAuthenticated, CarrosselController.Create);
+router.put("/update/:id", isAuthenticated, CarrosselController.Update);
+router.delete("/delete/:id", isAuthenticated, CarrosselController.Delete);
 
 export default router;
