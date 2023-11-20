@@ -72,12 +72,19 @@ class PageService {
     return page;
   }
 
-  async update({ title, slug, content, carrosselId }: UpdatePageRequest) {
+  async update(
+    { title, slug, content, carrosselId }: UpdatePageRequest,
+    id: string
+  ) {
+    if (!id) {
+      throw new Error("Missing id");
+    }
     if (!title || !slug || !content || !carrosselId) {
       throw new Error("Missing title, slug, content or carrosselId");
     }
 
     const page = await prismaClient.page.update({
+      where: { id },
       data: {
         title,
         slug,

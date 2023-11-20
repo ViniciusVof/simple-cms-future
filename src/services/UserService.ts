@@ -92,6 +92,9 @@ class UserService {
     return { user, token };
   }
   async update({ fullName, password }: UpdateUserRequest, id: string) {
+    if (!id) {
+      throw new Error("Missing id");
+    }
     if (!fullName || !password) {
       throw new Error("Missing fullName or password");
     }

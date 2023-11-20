@@ -6,6 +6,7 @@ interface CreateImageRequest {
   url: string;
   order: number;
   fileName: string;
+  carrosselId: string;
 }
 
 interface FindByIdImageRequest {
@@ -41,9 +42,18 @@ class ImageService {
 
     return image;
   }
-  async create({ title, content, url, order, fileName }: CreateImageRequest) {
-    if (!title || !content || !url || !order || !fileName) {
-      throw new Error("Missing title, content, url, order or fileName");
+  async create({
+    title,
+    content,
+    url,
+    order,
+    fileName,
+    carrosselId,
+  }: CreateImageRequest) {
+    if (!title || !content || !url || !order || !fileName || !carrosselId) {
+      throw new Error(
+        "Missing title, content, url, order, fileName or carrosselId"
+      );
     }
 
     const image = await prismaClient.image.create({
@@ -53,18 +63,26 @@ class ImageService {
         url,
         order,
         fileName,
+        carrosselId,
       },
     });
 
     return image;
   }
 
-  async update({ title, content, url, order, fileName }: UpdateImageRequest) {
+  async update(
+    { title, content, url, order, fileName }: UpdateImageRequest,
+    id: string
+  ) {
+    if (!id) {
+      throw new Error("Missing id");
+    }
     if (!title || !content || !url || !order || !fileName) {
       throw new Error("Missing title, content, url, order or fileName");
     }
 
     const image = await prismaClient.image.update({
+      where: { id },
       data: {
         title,
         content,

@@ -47,12 +47,16 @@ class CarrosselService {
     return carrossel;
   }
 
-  async update({ title }: UpdateCarrosselRequest) {
+  async update({ title }: UpdateCarrosselRequest, id: string) {
+    if (!id) {
+      throw new Error("Missing id");
+    }
     if (!title) {
       throw new Error("Missing title");
     }
 
     const carrossel = await prismaClient.carrossel.update({
+      where: { id },
       data: {
         title,
       },
