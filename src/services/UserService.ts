@@ -55,7 +55,15 @@ class UserService {
     return { user, token };
   }
   async findAll() {
-    const users = await prismaClient.user.findMany();
+    const users = await prismaClient.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
 
     return users;
   }
@@ -73,6 +81,14 @@ class UserService {
   async create({ email, fullName, password }: CreateUserRequest) {
     if (!email || !fullName || !password) {
       throw new Error("Missing email, fullName or password");
+    }
+
+    const userExists = await prismaClient.user.findUnique({
+      where: { email },
+    });
+
+    if (userExists) {
+      throw new Error("User already exists");
     }
 
     const user = await prismaClient.user.create({

@@ -9,7 +9,7 @@ const routes = Router();
 
 routes.use("/users", UserRoutes);
 routes.use("/pages", PageRoutes);
-routes.use("/carrossels", CarrosselRoutes);
+routes.use("/carousels", CarrosselRoutes);
 routes.use("/images", ImageRoutes);
 
 export default routes;

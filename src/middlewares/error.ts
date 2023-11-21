@@ -1,20 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 import "express-async-errors";
+import { StatusCodes } from "http-status-codes";
 
-export default function (
-  error: Error,
-  request: Request,
-  response: Response,
+export default (
+  err: Error,
+  req: Request,
+  res: Response,
   next: NextFunction
-) {
-  if (error instanceof Error) {
-    return response.status(400).json({
-      error: error.message,
+) => {
+  if (err instanceof Error) {
+    return res.status(400).json({
+      status: "error",
+      message: err.message,
     });
   }
 
-  return response.status(500).json({
+  return res.status(500).json({
     status: "error",
-    message: "Internal Server Error",
+    message: "Internal server error",
   });
-}
+};

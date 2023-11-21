@@ -28,7 +28,7 @@ interface DeletePageRequest {
 
 class PageService {
   async findAll() {
-    const pages = await prismaClient.page.findMany();
+    const pages = await prismaClient.pages.findMany();
 
     return pages;
   }
@@ -37,7 +37,7 @@ class PageService {
       throw new Error("Missing slug");
     }
 
-    const page = await prismaClient.page.findUnique({
+    const page = await prismaClient.pages.findUnique({
       where: { slug },
     });
 
@@ -49,7 +49,7 @@ class PageService {
       throw new Error("Missing id");
     }
 
-    const page = await prismaClient.page.findUnique({
+    const page = await prismaClient.pages.findUnique({
       where: { id },
     });
 
@@ -60,7 +60,7 @@ class PageService {
       throw new Error("Missing title, slug, content or carrosselId");
     }
 
-    const page = await prismaClient.page.create({
+    const page = await prismaClient.pages.create({
       data: {
         title,
         slug,
@@ -83,7 +83,7 @@ class PageService {
       throw new Error("Missing title, slug, content or carrosselId");
     }
 
-    const page = await prismaClient.page.update({
+    const page = await prismaClient.pages.update({
       where: { id },
       data: {
         title,
@@ -101,7 +101,7 @@ class PageService {
       throw new Error("Missing id");
     }
 
-    const page = await prismaClient.page.delete({
+    const page = await prismaClient.pages.delete({
       where: {
         id,
       },

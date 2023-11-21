@@ -27,7 +27,7 @@ interface DeleteImageRequest {
 
 class ImageService {
   async findAll() {
-    const images = await prismaClient.image.findMany();
+    const images = await prismaClient.images.findMany();
 
     return images;
   }
@@ -36,7 +36,7 @@ class ImageService {
       throw new Error("Missing id");
     }
 
-    const image = await prismaClient.image.findUnique({
+    const image = await prismaClient.images.findUnique({
       where: { id },
     });
 
@@ -56,7 +56,7 @@ class ImageService {
       );
     }
 
-    const image = await prismaClient.image.create({
+    const image = await prismaClient.images.create({
       data: {
         title,
         content,
@@ -81,7 +81,7 @@ class ImageService {
       throw new Error("Missing title, content, url, order or fileName");
     }
 
-    const image = await prismaClient.image.update({
+    const image = await prismaClient.images.update({
       where: { id },
       data: {
         title,
@@ -100,7 +100,7 @@ class ImageService {
       throw new Error("Missing id");
     }
 
-    const image = await prismaClient.image.delete({
+    const image = await prismaClient.images.delete({
       where: {
         id,
       },
